@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+
+        </div>
+    </section>
+}
+<h3>Workers:</h3>
+<ol class="round">
+    <table>
+    @foreach (var item in ViewBag.Workers)
+    {
+        <tr>
+            <td>@item.Id</td><td>Is master: @item.IsMaster</td><td>@Html.ActionLink("Kill", "Kill", "Home", new { instanceId = @item.Id }, null)</td><td>
+                                                                   <table>
+                                                                       @foreach (var tenant in item.Tenants)
+                                                                       {
+                                                                           <tr><td>@tenant.Key</td><td>@tenant.Value</td><td>@Html.ActionLink("Kill tenant", "KillTenant", "Home", new { instanceId = @item.Id, tenantId = @tenant.Key }, null)</td></tr>
+                                                                       }
+                                                                   </table>
+                                                               </td>
+        </tr>
+    }
+</table>
+</ol>
